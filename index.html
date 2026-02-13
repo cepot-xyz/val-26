@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta property="og:title" content="Surprise Experience">
+    <meta property="og:description" content="A minimalist dynamic experience.">
+    <meta property="og:image" content="https://static.photos/technology/1200x630/1">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF0000',
+                        secondary: '#C80018',
+                        background: '#1e1e1e',
+                        neutral: '#4B4E53',
+                        soft: '#FDF2F4',
+                    },
+                    fontFamily: {
+                        serif: ['Garamond', 'EB Garamond', 'Georgia', 'serif'],
+                    },
+                    dropShadow: {
+                        'neon': '0 0 5px rgba(255, 0, 0, 0.7)',
+                        'neon-hover': '0 0 15px rgba(255, 0, 0, 0.9)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Garamond', serif;
+            background-color: #1e1e1e;
+            color: #FDF2F4;
+            overflow: hidden;
+        }
+
+        .fade-transition {
+            transition: opacity 1s ease-in-out;
+        }
+
+        .text-neon {
+            text-shadow: 0 0 4px rgba(255, 0, 0, 0.5);
+        }
+        
+        .text-neon-hover:hover {
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+
+        .border-neon {
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        }
+        
+        .border-neon:hover {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen w-screen relative">
+
+    <!-- 
+        === STATE 1: LANDING VIEW ===
+    -->
+    <section id="landing-view" class="absolute inset-0 flex flex-col items-center justify-center z-20 fade-transition bg-background">
+        
+        <nav class="absolute top-6 left-0 w-full px-8 flex justify-between text-neutral text-xs uppercase tracking-widest">
+            <span>Welcome</span>
+            <span>Valentine 2026</span>
+        </nav>
+
+        <div class="text-center">
+            <h1 class="sr-only">Surprise Experience</h1>
+            
+            <button id="start-btn" 
+                class="group relative px-12 py-4 border border-primary text-primary bg-transparent text-2xl tracking-widest uppercase hover:bg-primary hover:text-soft transition-all duration-500 border-neon outline-none"
+            >
+                Start
+                <span class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></span>
+            </button>
+            
+            <p class="mt-4 text-neutral text-xs opacity-0 transition-opacity duration-700 delay-300" id="subtext">
+                Enter the unknown
+            </p>
+        </div>
+    </section>
+
+
+    <!-- 
+        === STATE 2: SURPRISE / ANIMATION VIEW ===
+    -->
+    <section id="surprise-view" class="opacity-0 fade-transition absolute inset-0 flex flex-col items-center justify-center bg-background z-10">
+        
+        <div class="absolute top-6 w-full px-8 flex justify-center z-20">
+            <span class="text-neutral text-xs tracking-[0.3em] uppercase">Happy Valentine 2026</span>
+        </div>
+
+        <video id="video-container" class="w-full h-full object-cover" autoplay loop muted>
+            <source src="assets/flower.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+        
+        <audio id="background-audio" loop>
+            <source src="assets/needolin.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        
+        <div class="absolute bottom-8 text-[#4B4E53] text-xs tracking-widest">
+            created by <a href="https://www.instagram.com/cepot.xyz_/" target="_blank">cepot.xyz_</a>
+        </div>
+    </section>
+
+    <!-- 
+        === JAVASCRIPT LOGIC ===
+    -->
+    <script>
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const startBtn = document.getElementById('start-btn');
+            const subtext = document.getElementById('subtext');
+            const landingView = document.getElementById('landing-view');
+            const surpriseView = document.getElementById('surprise-view');
+            const videoContainer = document.getElementById('video-container');
+            const backgroundAudio = document.getElementById('background-audio');
+
+            setTimeout(() => {
+                subtext.style.opacity = '1';
+            }, 500);
+
+            startBtn.addEventListener('click', () => {
+                landingView.style.opacity = '0';
+
+                setTimeout(() => {
+                    landingView.style.display = 'none';
+                    surpriseView.style.display = 'flex';
+                    
+                    surpriseView.style.opacity = '1';
+                    
+                    videoContainer.play();
+                    backgroundAudio.play();
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
